@@ -106,8 +106,8 @@ void draw_scene(Point p1, Point p2, Point testP) {
 
         // --- Rysowanie odcinka (czarny) ---
        sf::Vertex segment[2];
-        segment[0] = { {static_cast<float>(p1.x), static_cast<float>(p1.y)}, sf::Color::Black };
-        segment[1] = { {static_cast<float>(p2.x), static_cast<float>(p2.y)}, sf::Color::Black };
+        segment[0] = { {static_cast<float>(p1.x), static_cast<float>(p1.y)}, sf::Color::Red };
+        segment[1] = { {static_cast<float>(p2.x), static_cast<float>(p2.y)}, sf::Color::Red };
         window.draw(segment, 2, sf::PrimitiveType::Lines);
 
         // --- Punkt testowy (Czerwony, niebieski na odcinku) ---
@@ -135,8 +135,8 @@ void draw_scene(Point p1, Point p2, Point testP) {
 }
 
 int main(){
-    //run_tests();
-Point p1{200, 200}, p2{600, 450};
+    run_tests();
+    Point p1{200, 200}, p2{600, 450};
     Point testP{100, 400};
 
     draw_scene(p1, p2, testP);
