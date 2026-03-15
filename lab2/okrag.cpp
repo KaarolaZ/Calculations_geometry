@@ -12,14 +12,13 @@ struct Point{
 // test
 
 vector<Point> generate_polygon(double x0, double y0, double r, int n){
-    vector<Point> vertices; //wierzchołki
+    vector<Point> vertices; 
     if(n<3) return vertices;
 
     vertices.reserve(n);  //Rezerwuje miejsce, ale rozmiar wektora to nadal 0. Elementy dodajemy przez push_back
-    // Zamiast double pi = std::numbers::pi;
-    const double pi = std::acos(-1.0);
+    const double pi = acos(-1.0);
     for(int i=0; i<n; i++){
-        double angle=2.0*pi*i/n;
+        double angle = 2.0*pi*i/n;
 
         Point p;
         p.x=x0+r*cos(angle);
@@ -40,16 +39,14 @@ void draw_polygon_scene(double x0, double y0, double r, int n){
     sf::View view;
     view.setCenter({0.f, 0.f}); 
 
-    // Funkcja pomocnicza do aktualizacji rozmiaru widoku
+    // aktualizacja rozmiaru widoku
     auto updateView = [&]() {
-        // Podstawowy rozmiar okna skalowany przez zoomLevel
-        // Ujemne Y, aby zachować układ kartezjański
-        view.setSize({800.f * zoomLevel, -600.f * zoomLevel});
+        view.setSize({800.f * zoomLevel, -600.f * zoomLevel});    // Ujemne Y, aby zachować układ kartezjański
         window.setView(view);
     };
     updateView();
 
-    // Rysowanie osi układu (X i Y)
+    // Rysowanie osi układu 
     sf::Vertex axes[] = {
         {{-10000.f, 0.f}, sf::Color::Black}, {{10000.f, 0.f}, sf::Color::Black},
         {{0.f, -10000.f}, sf::Color::Black}, {{0.f, 10000.f}, sf::Color::Black}
@@ -71,9 +68,8 @@ void draw_polygon_scene(double x0, double y0, double r, int n){
 
     //tworzenie okregu
     sf::CircleShape circle(static_cast<float>(r));
-    // W układzie kartezjańskim (środek 0,0) środek CircleShape musi być przesunięty
-    circle.setOrigin({(float)r, (float)r}); 
-    circle.setPosition({(float)x0, (float)y0});
+    circle.setOrigin({(float)r, (float)r});   //ustawia środek odniesienia
+    circle.setPosition({(float)x0, (float)y0}); // ustawia środek odnoesienia dokładnie w (x0,y0)
     circle.setFillColor(sf::Color::Transparent);
     circle.setOutlineColor(sf::Color::Magenta); 
     circle.setOutlineThickness(1);
@@ -82,7 +78,7 @@ void draw_polygon_scene(double x0, double y0, double r, int n){
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) window.close();
         
-        // Obsługa Zoomu za pomocą rolki myszy
+            // Obsługa Zoomu za pomocą rolki myszy
             if (const auto* mouseWheel = event->getIf<sf::Event::MouseWheelScrolled>()) {
                 if (mouseWheel->wheel == sf::Mouse::Wheel::Vertical) {
                     if (mouseWheel->delta > 0) {
@@ -97,7 +93,6 @@ void draw_polygon_scene(double x0, double y0, double r, int n){
         
 
         window.clear(sf::Color::White);
-        
         window.draw(axes, 4, sf::PrimitiveType::Lines);
         window.draw(circle);  
         window.draw(polygon);  
