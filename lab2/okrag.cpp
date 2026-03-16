@@ -9,8 +9,6 @@ struct Point{
     double x,y;
 };
 
-// test
-
 vector<Point> generate_polygon(double x0, double y0, double r, int n){
     vector<Point> vertices; 
     if(n<3) return vertices;
