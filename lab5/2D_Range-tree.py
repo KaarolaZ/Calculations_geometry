@@ -60,21 +60,18 @@ def searching_for_range(node, y_min, y_max, result):
 def searching_2D_tree(node, x_min, x_max, y_min, y_max, result):
     if not node: return None
 
-    # Jeśli poddrzewo w całości mieści się w naszym zakresie X,
-    # nie musimy już martwić się osią X. Przeszukujemy tylko jego drzewo Y.
+    # Jeśli poddrzewo w całości mieści się w naszym zakresie X,nie musimy już martwić się osią X. Przeszukujemy tylko jego drzewo Y.
     if x_min <= node.min_x and node.max_x <= x_max:
         searching_for_range(node.y_tree, y_min, y_max, result)
         return
-    
+
     # W przeciwnym razie sprawdzamy punkt w bieżącym węźle 
     if(x_min <= node.point[0] <= x_max) and (y_min <= node.point[1] <= y_max):
         result.append(node.point)
 
-    # Idziemy w lewo, jeśli jest tam szansa na znalezienie czegoś >= x_min
     if node.left and x_min <=node.left.max_x:
         searching_2D_tree(node.left, x_min, x_max, y_min, y_max, result)
 
-    # Idziemy w prawo, jeśli jest szansa na znalezienie czegoś <= x_max
     if node.right and x_max >= node.right.min_x:
         searching_2D_tree(node.right, x_min, x_max, y_min, y_max, result)
 
@@ -83,7 +80,7 @@ def visualization_2D(points, x_min, x_max, y_min, y_max, found):
     plt.figure(figsize=(8,8))
     xs = [p[0] for p in points]
     ys = [p[1] for p in points]
-    plt.scatter(xs, ys, c='pink', alpha= 0.5, label='All points')
+    plt.scatter(xs, ys, c='pink', alpha= 0.5, label='Wszystkie punkty')
 
     # Rysowanie prostokąta
     rect = patches.Rectangle((x_min, y_min), x_max - x_min, y_max - y_min, 
@@ -143,9 +140,9 @@ if __name__ == "__main__":
         
         root_2d = build_2D_tree(set_2)
         
-        # Parametry zapytaniack
-        x1, x2 = 20, 60
-        y1, y2 = 10, 90
+        # Parametry zapytania
+        x1, x2 = 40, 95
+        y1, y2 = 50, 75
         found_points = []
         
         searching_2D_tree(root_2d, x1, x2, y1, y2, found_points)
